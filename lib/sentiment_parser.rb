@@ -1,11 +1,10 @@
 require 'pry'
 
 class SentimentParser
-  
+
   def self.analyze(tweets)
-    sentiment = SentimentParser.new
-    negative = sentiment.negative_words
-    positive = sentiment.positive_words
+    negative = self.negative_words
+    positive = self.positive_words
     positive_sentiment = []
     negative_sentiment = []
 
@@ -17,18 +16,18 @@ class SentimentParser
         positive_sentiment << t
       end
     end
-    sentiment.create_score(positive_sentiment, negative_sentiment)
+    self.calculate_score(positive_sentiment, negative_sentiment)
   end
 
-  def positive_words
+  def self.positive_words
     File.readlines('data/positive_words.txt').map(&:strip)
   end
 
-  def negative_words
+  def self.negative_words
     File.readlines('data/negative_words.txt').map(&:strip)
   end
 
-  def create_score(positive, negative)
-    {positive: positive.length, negative: negative.length}
+  def self.calculate_score(positive, negative)
+    { positive: positive.length, negative: negative.length }
   end
 end
